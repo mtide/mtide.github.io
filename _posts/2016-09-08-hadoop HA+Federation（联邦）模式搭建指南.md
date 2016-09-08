@@ -5,6 +5,7 @@ comments: true
 description: "hadoop HA+Federation（联邦）模式搭建指南"
 keywords: "storm, hadoop, topology, ha, federation"
 category: "BIGDATA"
+tag: "hadoop, ferdation, ha"
 ---
 
 ### 简述
