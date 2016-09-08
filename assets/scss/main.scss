@@ -6,3 +6,11 @@
 
 @import "layout";
 @import "syntax-highlighting";
+
+/** OVERRIDE */
+.post-item .date-label {
+  margin-left: 0;
+}
+.post-item .article-title {
+  width: 75%;
+}
