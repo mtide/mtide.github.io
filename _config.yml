@@ -43,9 +43,11 @@ gems:
 
 # navbar pages
 navbar:
-  - slug : about
-    title: About
-  - slug : post
-    title: POST
+  - slug : java
+    title: JAVA
+  - slug : bigdata
+    title: BIGDATA
+  - slug : 杂记
+    title: 杂记
 
 exclude: ["gulp", "node_modules", "bower", "bower_components", "config.rb", "src", "Gemfile", "Gemfile.lock", ".rvmrc", ".rbenv-version", "package.json", "gulpfile.js", "README.md", "Rakefile", "changelog.md"]
