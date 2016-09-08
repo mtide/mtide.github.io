@@ -28,7 +28,7 @@ sass:
 author:
   name     : "mtide"
   job      : "程序猿"
-  bio      : "It's just me."
+  bio      : "程序猿，目前正在做自己喜欢的事。<br>关注互联网产品，喜欢极致和偏执的东西。"
   thumb    : /images/author.jpg
   email    : mtide@qq.com
   url      : http://mtide.github.io
