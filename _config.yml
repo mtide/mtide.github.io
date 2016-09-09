@@ -15,6 +15,9 @@ comments: true
 permalink   : /:categories/:title.html
 markdown    : kramdown
 highlighter : rouge
+kramdown:
+  input: GFM # Enable GitHub Flavored Markdown (fenced code blocks)
+  hard_wrap: false
 
 source: ./
 destination: ./_site

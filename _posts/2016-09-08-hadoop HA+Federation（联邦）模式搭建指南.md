@@ -13,20 +13,23 @@ tag: "hadoop, ferdation, ha"
 hadoop 集群一共有4种部署模式，详见[《hadoop 生态圈介绍》](http://www.jianshu.com/p/c3a834e45ae3)。
 HA联邦模式解决了单纯HA模式的性能瓶颈（主要指Namenode、ResourceManager），将整个HA集群划分为两个以上的集群，不同的集群之间通过Federation进行连接，使得HA集群拥有了横向扩展的能力。理论上，在该模式下，能够通过增加计算节点以处理无限增长的数据。联邦模式下的配置在原HA模式的基础上做了部分调整。
 
-所有四种模式的部署指南见：
-[hadoop 伪分布式搭建指南](http://www.jianshu.com/p/38a94bade2b4)
-[hadoop 完全分布式搭建指南](http://www.jianshu.com/p/3a16f8ecf883)
-[hadoop HA高可用集群模式搭建指南](http://www.jianshu.com/p/8a8fb958f11f)
-[hadoop HA+Federation（联邦）模式搭建指南](http://www.jianshu.com/p/ccee07a31ca9)
+所有四种模式的部署指南见： 
+
+* [hadoop 伪分布式搭建指南](http://www.jianshu.com/p/38a94bade2b4)
+* [hadoop 完全分布式搭建指南](http://www.jianshu.com/p/3a16f8ecf883)
+* [hadoop HA高可用集群模式搭建指南](http://www.jianshu.com/p/8a8fb958f11f)
+* [hadoop HA+Federation（联邦）模式搭建指南](http://www.jianshu.com/p/ccee07a31ca9)
 
 ### 搭建过程
 ***
+
 ##### 系统环境
-Ubuntu 14.04 x64 Server LTS
-Hadoop 2.7.2
-vagrant 模拟4台主机，内存都为2G
+* Ubuntu 14.04 x64 Server LTS
+* Hadoop 2.7.2
+* vagrant 模拟4台主机，内存都为2G
 
 ##### 集群节点规划
+
 |     IP                     |主机名      | 角色描述 | 集群        |
 |: --------------------  :|: ---------- --|: ---------- :|: ---------- :|
 |192.168.100.201 | h01.vm.com | namenode-ns1-nn1, zkfc, QuorumPeerMain, resourcemanager | ns1 |
@@ -35,6 +38,7 @@ vagrant 模拟4台主机，内存都为2G
 |192.168.100.204 | h04.vm.com | namenode-ns2-nn4, zkfc, journalnode, nodemanager, datanode| ns2 |
 
 上表中：
+
 1. QuorumPeerMain 是zookeeper集群的入口进程；
 2. zkfc 是 Zookeeper FailoverController 的简称，主要用于实现两个NN之间的容灾。
 3. resourcemanager 是 yarn 中负责资源协调和管理的进程
@@ -48,12 +52,14 @@ vagrant 模拟4台主机，内存都为2G
 
 ###### 更新软件源索引
 * 分别在 h01 h02 h03 h04 操作
+
 ```bash
 sudo apt-get update
 ```
 
 ###### 安装基础软件
 * 分别在 h01 h02 h03 h04 操作
+
 ```bash
 sudo apt-get install ssh
 sudo apt-get install rsync
@@ -61,6 +67,7 @@ sudo apt-get install rsync
 
 ###### 配置主机域名
 * 分别在 h01 h02 h03 h04 操作
+
 ```bash
 sudo vim /etc/hostname # centos系统可能没有该文件，创建即可
 h01.vm.com # 该节点主机名
@@ -72,6 +79,7 @@ h01.vm.com # 该节点主机名
 http://blog.kissdata.com/2014/07/10/ubuntu-dns-bind.html
 * 配置 /etc/hosts，将以下代码追加到文件末尾即可（如搭建了DNS服务器，则跳过此步骤）
 * 分别在 h01 h02 h03 h04 操作
+
 ```bash
 sudo vim /etc/hosts
 192.168.100.201 h01.vm.com h01
@@ -97,6 +105,7 @@ hadoop-2.7.2.tar.gz
 zookeeper-3.4.8.tar.gz
 * 所有的软件包都统一解压到 /home/vagrant/VMBigData 目录下，其中 vagrant 是linux系统的用户名，由于我是使用 vagrant 虚拟的主机，所以默认是 vagrant
 * 在 h01 操作
+
 ```bash
 # 先在其中一台机子操作，后面会使用 scp 命令或者其他方法同步到其他主机
 mkdir -p /home/vagrant/VMBigData/hadoop /home/vagrant/VMBigData/java /home/vagrant/VMBigData/zookeeper
@@ -107,6 +116,7 @@ tar zxf zookeeper-3.4.8.tar.gz -C /home/vagrant/VMBigData/zookeeper
 
 ###### 配置软连接，方便以后升级版本
 * 在 h01 操作，后面通过 scp 同步到其他主机
+
 ```bash
 ln -s /home/vagrant/VMBigData/java/jdk1.7.0_79/  /home/vagrant/VMBigData/java/default
 ln -s /home/vagrant/VMBigData/hadoop/hadoop-2.7.2/  /home/vagrant/VMBigData/hadoop/default
@@ -115,6 +125,7 @@ ln -s /home/vagrant/VMBigData/zookeeper/zookeeper-3.4.8/ /home/vagrant/VMBigData
 
 ###### 配置环境变量
 * 分别在 h01 h02 h03 h04 操作
+
 ```bash
 sudo vim /etc/profile
 export HADOOP_HOME=/home/vagrant/VMBigData/hadoop/default
@@ -126,12 +137,14 @@ source /etc/profile
 ###### 配置免密码ssh登录
 hadoop主节点需要能远程登陆集群内的所有节点（包括自己），以执行命令。所以需要配置免密码的ssh登陆。可选的ssh秘钥对生成方式有rsa和dsa两种，这里选择rsa。
 * 分别在 h01 h02 h03 h04 ，即4个主节点上操作
+
 ```bash
 ssh-keygen -t rsa -C "youremail@xx.com"
 # 注意在接下来的命令行交互中，直接按回车跳过输入密码
 ```
 
 * 分别在 h01 h02 h03 h04 上操作。以下命令将本节点的公钥 id_rsa.pub 文件的内容追加到远程主机的 authorized_keys 文件中（默认位于 ~/.ssh/）
+
 ```bash
 ssh-copy-id vagrant@h01.vm.com # vagrant是远程主机用户名
 ssh-copy-id vagrant@h02.vm.com
@@ -140,6 +153,7 @@ ssh-copy-id vagrant@h04.vm.com
 ```
 
 * 在 h01 h02 h03 h04 上测试无密码 ssh 登录到 h01 h02 h03 h04
+
 ```bash
 ssh h01.vm.com
 ssh h02.vm.com
@@ -152,6 +166,7 @@ ssh h04.vm.com
 ###### 配置从节点
 在 slaves 文件中配置的主机即为从节点，将自动运行datanode, nodemanager服务
 * 在 h01 操作，后面通过 scp 同步到其他主机
+
 ```bash
 vim /home/vagrant/VMBigData/hadoop/default/etc/hadoop/slaves
 h03.vm.com
@@ -162,6 +177,7 @@ h04.vm.com
 
 ###### 建立存储数据的相应目录
 * 在 h01 操作，后面通过 scp 同步到其他主机
+
 ```bash
 mkdir -p /home/vagrant/VMBigData/hadoop/data/hdfs/tmp
 mkdir -p /home/vagrant/VMBigData/hadoop/data/journal/data
@@ -177,6 +193,7 @@ mkdir -p /home/vagrant/VMBigData/hadoop/data/log-dirs
 ###### 配置hadoop参数
 在 h01 操作，后面通过 scp 同步到其他主机
 * vim /home/vagrant/VMBigData/hadoop/default/etc/hadoop/hadoop-env.sh
+
 ```bash
 # export JAVA_HOME=${JAVA_HOME} # 注意注释掉原来的这行
 export JAVA_HOME=/home/vagrant/VMBigData/java/default
@@ -189,11 +206,13 @@ export HADOOP_SECURE_DN_PID_DIR=${HADOOP_PID_DIR}
 ```
 
 * vim /home/vagrant/VMBigData/hadoop/default/etc/hadoop/mapred-env.sh
+
 ```bash
 export HADOOP_MAPRED_PID_DIR=/home/vagrant/VMBigData/hadoop/data/hdfs/pid
 ```
 
 * vim /home/vagrant/VMBigData/hadoop/default/etc/hadoop/core-site.xml
+
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
 # <configuration> # 注意此处的修改
@@ -223,6 +242,7 @@ export HADOOP_MAPRED_PID_DIR=/home/vagrant/VMBigData/hadoop/data/hdfs/pid
 ```
 
 * vim /home/vagrant/VMBigData/hadoop/default/etc/hadoop/cmt.xml
+
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
 <configuration>
@@ -244,6 +264,7 @@ export HADOOP_MAPRED_PID_DIR=/home/vagrant/VMBigData/hadoop/data/hdfs/pid
 ```
 
 * vim /home/vagrant/VMBigData/hadoop/default/etc/hadoop/hdfs-site.xml
+
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
 <!-- HDFS-HA 配置 -->
@@ -372,12 +393,14 @@ export HADOOP_MAPRED_PID_DIR=/home/vagrant/VMBigData/hadoop/data/hdfs/pid
 ```
 
 * vim /home/vagrant/VMBigData/hadoop/default/etc/hadoop/yarn-env.sh
+
 ```bash
 # export JAVA_HOME=/home/y/libexec/jdk1.6.0/
 export JAVA_HOME=/home/vagrant/VMBigData/java/default/
 ```
 
 * vim /home/vagrant/VMBigData/hadoop/default/etc/hadoop/yarn-site.xml
+
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
 <!-- YARN-HA 配置 -->
@@ -517,6 +540,7 @@ export JAVA_HOME=/home/vagrant/VMBigData/java/default/
 ```
 
 * vim /home/vagrant/VMBigData/hadoop/default/etc/hadoop/mapred-site.xml
+
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
 <configuration> 
@@ -593,6 +617,7 @@ export JAVA_HOME=/home/vagrant/VMBigData/java/default/
 
 ###### 安装配置zookeeper
 * 在 h01 操作，后面通过 scp 同步到其他主机
+
 ```bash
 cd /home/vagrant/VMBigData/zookeeper/default/conf/
 cp zoo_sample.cfg zoo.cfg
@@ -605,6 +630,7 @@ server.1=h01.vm.com:2888:3888
 server.2=h02.vm.com:2888:3888
 server.3=h03.vm.com:2888:3888
 ```
+
 ```bash
 mkdir -p /home/vagrant/VMBigData/zookeeper/data/tmp
 vim /home/vagrant/VMBigData/zookeeper/data/tmp/myid
@@ -613,17 +639,20 @@ vim /home/vagrant/VMBigData/zookeeper/data/tmp/myid
 
 ###### 将hadoop所需文件同步到其他主机
 * 在 h01 上操作
+
 ```bash
 scp -r /home/vagrant/VMBigData vagrant@h02.vm.com:/home/vagrant
 scp -r /home/vagrant/VMBigData vagrant@h03.vm.com:/home/vagrant
 scp -r /home/vagrant/VMBigData vagrant@h04.vm.com:/home/vagrant
 ```
+
 > !!! 注意：default 软连接需要重建 !!!
 
 * 修改各节点的 zookeeper 的 /home/vagrant/VMBigData/zookeeper/data/tmp/myid 文件，内容为各节点编号，本例中为 1,2,3
 
 ###### 启动zookeeper
 * 在 h01 h02 h03 操作
+
 ```bash
 cd /home/vagrant/VMBigData/zookeeper/default
 bin/zkServer.sh start
@@ -631,6 +660,7 @@ bin/zkServer.sh start
 
 ###### 启动JournalNode
 * 在任一配置了journalnode的节点操作
+
 ```bash
 cd /home/vagrant/VMBigData/hadoop/default
 sbin/hadoop-daemons.sh --hostnames "h02.vm.com h03.vm.com h04.vm.com" start journalnode
@@ -639,6 +669,7 @@ sbin/hadoop-daemons.sh --hostnames "h02.vm.com h03.vm.com h04.vm.com" start jour
 ###### 格式化namenode
 * 在 h01 和 h03 即每个集群其中一台namenode的节点上执行
 * 注意需要指定集群ID
+
 ```bash
 hdfs namenode -format -clusterid hd0703
 ```
@@ -647,6 +678,7 @@ hdfs namenode -format -clusterid hd0703
 
 ###### 启动格式化后的namenode
 * 在已经格式化过的 h01 和 h03 namenode 节点运行
+
 ```bash
 cd /home/vagrant/VMBigData/hadoop/default
 sbin/hadoop-daemons.sh  --hostnames "h01.vm.com h03.vm.com" start namenode
@@ -654,6 +686,7 @@ sbin/hadoop-daemons.sh  --hostnames "h01.vm.com h03.vm.com" start namenode
 
 ###### 同步四个namenode的数据
 * 在 h02 和 h04 执行同步
+
 ```bash
 cd /home/vagrant/VMBigData/hadoop/default
 hdfs namenode -bootstrapStandby
@@ -661,6 +694,7 @@ hdfs namenode -bootstrapStandby
 
 ###### 启动同步后的namenode
 * 在已经同步过的 h02 和 h04 namenode 节点运行
+
 ```bash
 cd /home/vagrant/VMBigData/hadoop/default
 sbin/hadoop-daemons.sh  --hostnames "h02.vm.com h04.vm.com" start namenode
@@ -668,6 +702,7 @@ sbin/hadoop-daemons.sh  --hostnames "h02.vm.com h04.vm.com" start namenode
 
 ###### 格式化zkfc
 * 在 h01 和 h03 (主namenode) 上操作
+
 ```bash
 hdfs zkfc -formatZK
 ```
@@ -676,6 +711,7 @@ hdfs zkfc -formatZK
 
 ###### 启动zkfc
 * 在 h01 操作即可
+
 ```bash
 cd /home/vagrant/VMBigData/hadoop/default
 sbin/hadoop-daemons.sh --hostnames "h01.vm.com h02.vm.com h03.vm.com h04.vm.com" start zkfc
@@ -686,6 +722,7 @@ sbin/hadoop-daemons.sh --hostnames "h01.vm.com h02.vm.com h03.vm.com h04.vm.com"
 
 *启动hdfs*
 * 可在任意主节点执行
+
 ```bash
 cd /home/vagrant/VMBigData/hadoop/default
 sbin/start-dfs.sh
@@ -694,6 +731,7 @@ sbin/start-dfs.sh
 
 *启动Yarn*
 * 在h01 和 h02 即计划搭载 ResourceManager 的节点上操作
+
 ```bash
 cd /home/vagrant/VMBigData/hadoop/default
 sbin/start-yarn.sh
