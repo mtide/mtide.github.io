@@ -8,6 +8,18 @@
 @import "syntax-highlighting";
 
 /** OVERRIDE */
+.post-content h1, 
+.post-content h2,
+.post-content h3,
+.post-content h4,
+.post-content h5,
+.post-content h6 {
+  color: black;
+  font-weight: bold;
+}
+.post-content p {
+  margin-bottom: 1.75em;
+}
 .post-item .date-label {
   margin-left: 0;
 }
@@ -26,4 +38,8 @@ p.lead {
 }
 .intro .container {
   padding-bottom: 1.5em;
+}
+.post-title {
+  text-align: center;
+  color: black;
 }
