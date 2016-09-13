@@ -8,8 +8,8 @@ category: "NOTE"
 tag: "storm"
 ---
 
-git config --global           # 修改当前用户的配置
-sudo git config --system      # 修改系统全局的配置
+* git config --global           # 修改当前用户的配置
+* sudo git config --system      # 修改系统全局的配置
 
 ###### git config --list
 ```bash
