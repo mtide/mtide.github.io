@@ -4,7 +4,7 @@ title: "浊流"
 title2: "的博客" # default: ""
 description: "做一些技术笔记、分享和讨论"
 keywords: "java, web, hadoop, spark"
-url: http://mtide.github.io # site url
+url: http://mtide.cn # site url
 baseurl: "/" # apply repo name if use it under gh-pages branch
 # baseurl: null # apply null if repo name is something like username.github.io
 
@@ -34,7 +34,7 @@ author:
   bio      : "程序猿，目前正在做自己喜欢的事。<br>关注互联网产品，喜欢极致和偏执的东西。"
   thumb    : /images/author.jpg
   email    : mtide@qq.com
-  url      : http://mtide.github.io
+  url      : http://mtide.cn
   github   : http://github.com/mtide
 
 # social settings
@@ -48,11 +48,13 @@ paginate: 5
 
 # navbar pages
 navbar:
-  - slug : java
+  - slug : WEB
+    title: WEB
+  - slug : JAVA
     title: JAVA
-  - slug : bigdata
+  - slug : BIGDATA
     title: BIGDATA
-  - slug : note
+  - slug : NOTE
     title: NOTE
 
 exclude: ["gulp", "node_modules", "bower", "bower_components", "config.rb", "src", "Gemfile", "Gemfile.lock", ".rvmrc", ".rbenv-version", "package.json", "gulpfile.js", "README.md", "Rakefile", "changelog.md"]
