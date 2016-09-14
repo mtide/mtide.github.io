@@ -7,21 +7,18 @@ title: 浊流的博客
 
 <section class="post-list">
   <div class="container">
-    {% for post in site.posts %}
-      {% unless post.next %}
-        <h2 class="category-title">{{ post.category }}</h2>
-      {% else %}
-        {% capture category %}{{ post.category }}{% endcapture %}
-        {% capture ncategory %}{{ post.next.category }}{% endcapture %}
-        {% if category != ncategory %}
-          <h2 class="category-title">{{ post.category }}</h2>
-        {% endif %}
-      {% endunless %}
-      <article class="post-item">
-        <span class="post-meta date-label">{{ post.date | date: "%Y年%m月%d日" }}</span>
-        <div class="article-title"><a class="post-link" href="{{ post.url }}">{{ post.title }}</a></div>
-      </article>
+  {% for cate in site.categories %}
+    <h2 class="category-title">{{ cate[0] }}</h2>
+    {% for posts in cate %}
+      {% for post in posts %}
+        <article class="post-item">
+          <span class="post-meta date-label">{{ post.date | date: "%Y年%m月%d日" }}</span>
+          <div class="article-title"><a class="post-link" href="{{ post.url }}">{{ post.title }}</a></div>
+        </article>
+      {% endfor %}
     {% endfor %}
+  {% endfor %}
+
   </div>
 
 </section>
