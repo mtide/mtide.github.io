@@ -1,7 +1,7 @@
 
 # SEO settings
-title: "浊流"
-title2: "的博客" # default: ""
+title: "yellow"
+title2: "'s blog" # default: ""
 description: "做一些技术笔记、分享和讨论"
 keywords: "java, web, hadoop, spark"
 url: http://mtide.cn # site url
@@ -29,9 +29,9 @@ sass:
 
 # Author settings
 author:
-  name     : "mtide"
-  job      : "程序猿"
-  bio      : "程序猿，目前正在做自己喜欢的事。<br>关注互联网产品，喜欢极致和偏执的东西。"
+  name     : "mtide.cn"
+  job      : "码农"
+  bio      : "yellow，目前正在做自己喜欢的事。<br>关注互联网产品，喜欢极致和偏执的东西。"
   thumb    : /images/author.jpg
   email    : mtide@qq.com
   url      : http://mtide.cn
