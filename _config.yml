@@ -4,7 +4,7 @@ title: "yellow"
 title2: "'s blog" # default: ""
 description: "做一些技术笔记、分享和讨论"
 keywords: "java, web, hadoop, spark"
-url: http://mtide.cn # site url
+url: https://mtide.net # site url
 baseurl: "/" # apply repo name if use it under gh-pages branch
 # baseurl: null # apply null if repo name is something like username.github.io
 
@@ -29,13 +29,13 @@ sass:
 
 # Author settings
 author:
-  name     : "mtide.cn"
+  name     : "mtide.net"
   job      : "码农"
   bio      : "yellow，目前正在做自己喜欢的事。<br>关注互联网产品，喜欢极致和偏执的东西。"
   thumb    : /images/author.jpg
   email    : mtide@qq.com
-  url      : http://mtide.cn
-  github   : http://github.com/mtide
+  url      : https://mtide.net
+  github   : https://github.com/mtide
 
 # social settings
 og_locale: "zh_CN"
