@@ -10,6 +10,7 @@ baseurl: "/" # apply repo name if use it under gh-pages branch
 
 repo: https://github.com/mtide/mtide.github.io
 comments: true
+disqus_shortname: "mtide"
 
 # Build settings
 permalink   : /:categories/:title.html
@@ -31,7 +32,7 @@ sass:
 author:
   name     : "mtide.net"
   job      : "码农"
-  bio      : "yellow，目前正在做自己喜欢的事。<br>关注互联网产品，喜欢极致和偏执的东西。"
+  bio      : "yellow，a coder & SC2 player.<br>关注互联网产品，喜欢极致和偏执的东西。"
   thumb    : /images/author.jpg
   email    : mtide@qq.com
   url      : https://mtide.net
