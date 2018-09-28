@@ -15,10 +15,10 @@ HA联邦模式解决了单纯HA模式的性能瓶颈（主要指Namenode、Resou
 
 所有四种模式的部署指南见： 
 
-* [hadoop 伪分布式搭建指南](http://www.jianshu.com/p/38a94bade2b4)
-* [hadoop 完全分布式搭建指南](http://www.jianshu.com/p/3a16f8ecf883)
-* [hadoop HA高可用集群模式搭建指南](http://www.jianshu.com/p/8a8fb958f11f)
-* [hadoop HA+Federation（联邦）模式搭建指南](http://www.jianshu.com/p/ccee07a31ca9)
+* [hadoop 伪分布式搭建指南](http://www.jianshu.com/p/38a94bade2b4)  
+* [hadoop 完全分布式搭建指南](http://www.jianshu.com/p/3a16f8ecf883)  
+* [hadoop HA高可用集群模式搭建指南](http://www.jianshu.com/p/8a8fb958f11f)  
+* [hadoop HA+Federation（联邦）模式搭建指南](http://www.jianshu.com/p/ccee07a31ca9)  
 
 ### 搭建过程
 ***
