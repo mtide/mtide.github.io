@@ -49,8 +49,8 @@ paginate: 20
 
 # navbar pages
 navbar:
-  - slug : WEB
-    title: WEB
+  - slug : ARCHITECTURE
+    title: ARCHITECTURE
   - slug : JAVA
     title: JAVA
   - slug : BIGDATA
