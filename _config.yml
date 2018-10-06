@@ -13,7 +13,7 @@ comments: true
 disqus_shortname: "mtide"
 
 # Build settings
-permalink   : /:categories/:title.html
+permalink   : /:title:output_ext
 markdown    : kramdown
 highlighter : rouge
 kramdown:
