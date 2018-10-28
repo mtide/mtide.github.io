@@ -11,10 +11,12 @@ title: 首页
     <h2 class="category-title">{{ cate[0] }}</h2>
     {% for posts in cate %}
       {% for post in posts %}
+        {% if post.title %}
         <article class="post-item">
           <span class="post-meta date-label">{{ post.date | date: "%Y年%m月%d日" }}</span>
           <div class="article-title"><a class="post-link" href="{{ post.url }}">{{ post.title }}</a></div>
         </article>
+        {%  endif %}
       {% endfor %}
     {% endfor %}
   {% endfor %}
