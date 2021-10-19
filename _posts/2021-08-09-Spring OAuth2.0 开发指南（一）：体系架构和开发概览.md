@@ -1,12 +1,4 @@
----
-layout: post
-title: "Spring OAuth2.0 开发指南（一）：体系架构和开发概览"
-comments: true
-description: " Spring OAuth2.0 开发指南（一）：体系架构和开发概览"
-keywords: "认证,授权,鉴权,OAuth2.0,Spring Security"
-category: "ARCHITECTURE"
-tag: "OAuth2.0,身份治理"
----
+## Spring OAuth2.0 开发指南（一）：体系架构和开发概览
 
 [TOC]
 
@@ -21,6 +13,9 @@ tag: "OAuth2.0,身份治理"
 4. （五）OAuth2.0 微服务场景实例开发：以密码模式为例，介绍在微服务场景下使用 OAuth2.0 以及整合 JWT 的关键技术方法，主要围绕客户端、微服务网关、认证授权服务进行，不涉及微服务的其他模块等。
 
 本系列第一篇主要聚焦 OAuth2.0 体系的概念介绍，其余各篇偏向于实战，主要实现 OAuth2.0 的三种授权模式：密码模式、客户端模式和授权码模式，包括展示授权服务器、资源服务器、客户端等几种角色的交互，以及 JWT 的整合。并且每个实例都提供两个代码版本：一个是基于旧的 Spring Security OAuth2 组件；一个是基于新的 Spring Authorization Server 组件。
+
+
+> 需要注意的是 password 模式由于 OAuth2.1 不推荐使用所以只能提供旧的组件代码版本，具体请参见 https://datatracker.ietf.org/doc/html/draft-ietf-oauth-v2-1-02
 
 如果对认证和授权平台的相关理论感兴趣，可以移步本人早前的两篇文章：
 
@@ -302,6 +297,8 @@ PC、Web 服务器和负载均衡器三者呈三角形状，因此叫做三角�
 
 > Spring Security OAuth2 目前已停止更新，官方不推荐继续使用。相关功能已经迁移到 Spring Security，但授权服务器（Authorization Server）功能并未包含。Authorization Server 功能将由 Spring Security 团队主导开发的 Spring Authorization Server 开源组件提供，详细信息请查看官方通告：https://spring.io/blog/2020/04/15/announcing-the-spring-authorization-server
 
+Spring Authorization Server 项目目前还在迭代中，该项目的开发计划托管在 ZenHub 上，感兴趣的同学可以自行了解： https://app.zenhub.com/workspaces/authorization-server-5e8f3182b5e8f5841bfc4902/board?repos=248032165
+
 #### 一）基于 Spring Framework
 
 * spring-security
@@ -383,8 +380,8 @@ PC、Web 服务器和负载均衡器三者呈三角形状，因此叫做三角�
 </dependencyManagement>
     
 <dependency>
-	<groupId>org.springframework.cloud</groupId>
-	<artifactId>spring-cloud-starter-oauth2</artifactId>
+    <groupId>org.springframework.cloud</groupId>
+    <artifactId>spring-cloud-starter-oauth2</artifactId>
 </dependency>
 ```
 
@@ -407,6 +404,12 @@ PC、Web 服务器和负载均衡器三者呈三角形状，因此叫做三角�
     <version>0.1.2</version>
 </dependency>
 ```
+
+Spring Authorization Server 项目遵守 OAuth2.1 规范而不支持 password 模式，因此需要是用此模式的项目可以考虑备选方案。
+
+https://app.zenhub.com/workspaces/authorization-server-5e8f3182b5e8f5841bfc4902/issues/spring-projects/spring-authorization-server/459
+
+![Spring Authorization Server 不支持 password 模式的官方答复截图](https://mtide.net/assets/images/post/20210809/5.png)
 
 #### 备选方案： spring-security-oauth2 或 spring-cloud-starter-oauth2
 
@@ -438,8 +441,8 @@ PC、Web 服务器和负载均衡器三者呈三角形状，因此叫做三角�
 
 ```
 <dependency>
-	<groupId>org.springframework.cloud</groupId>
-	<artifactId>spring-cloud-starter-oauth2</artifactId>
+    <groupId>org.springframework.cloud</groupId>
+    <artifactId>spring-cloud-starter-oauth2</artifactId>
 </dependency>
 ```
 
