@@ -1,4 +1,12 @@
-## Spring OAuth2 开发指南（一）：体系架构和开发概览
+---
+layout: post
+title: "Spring OAuth2 开发指南（一）：体系架构和开发概览"
+comments: true
+description: "Spring OAuth2 开发指南（一）：体系架构和开发概览"
+keywords: "spring security,oauth2,鉴权,认证,授权"
+category: "ARCHITECTURE"
+tag: "spring security,oauth2"
+---
 
 [TOC]
 
