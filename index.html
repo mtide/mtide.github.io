@@ -7,9 +7,9 @@ title: 首页
 
 <section class="post-list">
   <div class="container">
-  {% for cate in site.categories %}
-    <h2 class="category-title">{{ cate[0] }}</h2>
-    {% for posts in cate %}
+    <!-- ARCHITECTURE -->
+    <h2 class="category-title">{{ site.categories.ARCHITECTURE }}</h2>
+    {% for posts in site.categories.ARCHITECTURE %}
       {% for post in posts %}
         {% if post.title %}
         <article class="post-item">
@@ -19,7 +19,32 @@ title: 首页
         {%  endif %}
       {% endfor %}
     {% endfor %}
-  {% endfor %}
+
+    <!-- BIGDATA -->
+    <h2 class="category-title">{{ site.categories.BIGDATA }}</h2>
+    {% for posts in site.categories.BIGDATA %}
+      {% for post in posts %}
+        {% if post.title %}
+        <article class="post-item">
+          <span class="post-meta date-label">{{ post.date | date: "%Y年%m月%d日" }}</span>
+          <div class="article-title"><a class="post-link" href="{{ post.url }}">{{ post.title }}</a></div>
+        </article>
+        {%  endif %}
+      {% endfor %}
+    {% endfor %}
+
+    <!-- NOTE -->
+    <h2 class="category-title">{{ site.categories.NOTE }}</h2>
+    {% for posts in site.categories.NOTE %}
+      {% for post in posts %}
+        {% if post.title %}
+        <article class="post-item">
+          <span class="post-meta date-label">{{ post.date | date: "%Y年%m月%d日" }}</span>
+          <div class="article-title"><a class="post-link" href="{{ post.url }}">{{ post.title }}</a></div>
+        </article>
+        {%  endif %}
+      {% endfor %}
+    {% endfor %}
 
   </div>
 
