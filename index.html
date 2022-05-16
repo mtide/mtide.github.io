@@ -8,44 +8,37 @@ title: 首页
 <section class="post-list">
   <div class="container">
     <!-- ARCHITECTURE -->
-    <h2 class="category-title">{{ site.categories.ARCHITECTURE }}</h2>
-    {% for posts in site.categories.ARCHITECTURE %}
-      {% for post in posts %}
-        {% if post.title %}
-        <article class="post-item">
-          <span class="post-meta date-label">{{ post.date | date: "%Y年%m月%d日" }}</span>
-          <div class="article-title"><a class="post-link" href="{{ post.url }}">{{ post.title }}</a></div>
-        </article>
-        {%  endif %}
-      {% endfor %}
+    <h2 class="category-title">ARCHITECTURE</h2>
+    {% for post in site.categories.ARCHITECTURE %}
+      {% if post.title %}
+      <article class="post-item">
+        <span class="post-meta date-label">{{ post.date | date: "%Y年%m月%d日" }}</span>
+        <div class="article-title"><a class="post-link" href="{{ post.url }}">{{ post.title }}</a></div>
+      </article>
+      {%  endif %}
     {% endfor %}
 
     <!-- BIGDATA -->
-    <h2 class="category-title">{{ site.categories.BIGDATA }}</h2>
-    {% for posts in site.categories.BIGDATA %}
-      {% for post in posts %}
-        {% if post.title %}
-        <article class="post-item">
-          <span class="post-meta date-label">{{ post.date | date: "%Y年%m月%d日" }}</span>
-          <div class="article-title"><a class="post-link" href="{{ post.url }}">{{ post.title }}</a></div>
-        </article>
-        {%  endif %}
-      {% endfor %}
+    <h2 class="category-title">BIGDATA</h2>
+    {% for post in site.categories.BIGDATA %}
+      {% if post.title %}
+      <article class="post-item">
+        <span class="post-meta date-label">{{ post.date | date: "%Y年%m月%d日" }}</span>
+        <div class="article-title"><a class="post-link" href="{{ post.url }}">{{ post.title }}</a></div>
+      </article>
+      {%  endif %}
     {% endfor %}
 
     <!-- NOTE -->
-    <h2 class="category-title">{{ site.categories.NOTE }}</h2>
-    {% for posts in site.categories.NOTE %}
-      {% for post in posts %}
-        {% if post.title %}
-        <article class="post-item">
-          <span class="post-meta date-label">{{ post.date | date: "%Y年%m月%d日" }}</span>
-          <div class="article-title"><a class="post-link" href="{{ post.url }}">{{ post.title }}</a></div>
-        </article>
-        {%  endif %}
-      {% endfor %}
+    <h2 class="category-title">NOTE</h2>
+    {% for post in site.categories.NOTE %}
+      {% if post.title %}
+      <article class="post-item">
+        <span class="post-meta date-label">{{ post.date | date: "%Y年%m月%d日" }}</span>
+        <div class="article-title"><a class="post-link" href="{{ post.url }}">{{ post.title }}</a></div>
+      </article>
+      {%  endif %}
     {% endfor %}
-
   </div>
 
 </section>
